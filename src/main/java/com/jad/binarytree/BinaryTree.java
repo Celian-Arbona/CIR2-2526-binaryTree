@@ -1,9 +1,24 @@
 package com.jad.binarytree;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BinaryTree<E> {
     private Node<E> root;
+    public List<E> prefix() {
+        if (this.root == null) return new ArrayList<>();
+        return this.root.prefix();
+    }
+
+    public List<E> infix() {
+        if (this.root == null) return new ArrayList<>();
+        return this.root.infix();
+    }
+
+    public List<E> suffix() {
+        if (this.root == null) return new ArrayList<>();
+        return this.root.suffix();
+    };
 
     public BinaryTree(final List<E> values) {
         if (values == null || values.isEmpty()) {

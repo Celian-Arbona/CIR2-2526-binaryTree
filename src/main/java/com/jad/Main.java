@@ -9,5 +9,8 @@ public class Main {
         BinaryTree<Character> binaryTree = new BinaryTree<>(
                 List.of('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'));
         System.out.println(binaryTree.toPrettyString());
+        System.out.println(binaryTree.prefix());
+        System.out.println(binaryTree.infix());
+        System.out.println(binaryTree.suffix());
     }
 }
