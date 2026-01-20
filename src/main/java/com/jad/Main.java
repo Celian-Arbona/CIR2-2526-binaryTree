@@ -1,26 +1,17 @@
 package com.jad;
 
-import com.jad.binarytree.BinarySearchTree;
-
-import java.util.List;
+import com.jad.bst.BST;
 
 public class Main {
     public static void main(String[] args) {
-        BinarySearchTree<Message> binarySearchTree = new BinarySearchTree<>(
-                List.of(
-                        new Message(12, "Hello"),
-                        new Message(14, "World"),
-                        new Message(16, "!"),
-                        new Message(1, "This"),
-                        new Message(59, "is"),
-                        new Message(13, "JAD")
-                       )
-        );
-        System.out.println(binarySearchTree.toPrettyString());
-        System.out.println(binarySearchTree.prefix());
-        System.out.println(binarySearchTree.infix());
-        System.out.println(binarySearchTree.suffix());
-        System.out.println(binarySearchTree.byWidth());
-        System.out.println(binarySearchTree.getByValue(new Message(89, "")));
+        BST<String> bst = new BST<>();
+        bst.addData(3, "Titi");
+        bst.addData(1, "Tata");
+        bst.addData(2, "Tete");
+        bst.addData(4, "Mimi");
+        bst.addData(5, "Toto");
+        bst.addData(6, "Tutu");
+        bst.addData(7, "Mama");
+        bst.toMMDFile("bst.mmd");
     }
 }
