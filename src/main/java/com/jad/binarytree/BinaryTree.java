@@ -1,9 +1,13 @@
 package com.jad.binarytree;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BinaryTree<E> {
+    @Getter(AccessLevel.PACKAGE)
     private Node<E> root;
 
     public BinaryTree(final List<E> values) {

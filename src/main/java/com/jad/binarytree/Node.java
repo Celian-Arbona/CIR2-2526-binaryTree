@@ -3,7 +3,10 @@ package com.jad.binarytree;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 @Getter
 @Setter
@@ -59,14 +62,22 @@ class Node<E> {
         List<E> result = new ArrayList<>();
         Queue<Node<E>> queue = new LinkedList<>();
         queue.add(this);
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
             Node<E> current = queue.remove();
             result.add(current.value);
-            if(current.getLeft()!= null) queue.add(current.getLeft());
-            if(current.getRight() != null) queue.add(current.getRight());
+            if (current.getLeft() != null) queue.add(current.getLeft());
+            if (current.getRight() != null) queue.add(current.getRight());
         }
         return result;
     }
 
 
+    @Override
+    public String toString() {
+        return "Node{" +
+                "value=" + getValue() +
+                ", left=" + getLeft() +
+                ", right=" + getRight() +
+                '}';
+    }
 }

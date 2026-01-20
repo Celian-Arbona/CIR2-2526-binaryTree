@@ -22,4 +22,16 @@ public class ComparableNode<E extends Comparable<E>> extends Node<E> {
             }
         }
     }
+
+    public Node<E> getByValue(final E value) {
+        if (value == null) return null;
+        final int resultComparison = this.getValue().compareTo(value);
+        if (resultComparison == 0) return this;
+        if (resultComparison < 0) {
+            if (this.getRight() == null) return null;
+            return ((ComparableNode<E>) this.getRight()).getByValue(value);
+        }
+        if (this.getLeft() == null) return null;
+        return ((ComparableNode<E>) this.getLeft()).getByValue(value);
+    }
 }
