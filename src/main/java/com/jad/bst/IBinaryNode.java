@@ -28,4 +28,7 @@ public interface IBinaryNode<E> {
     int getBalancingFactor();
 
     boolean isBalanced();
+
+    IBinaryNode<E> getByIndex(final int index);
+
 }

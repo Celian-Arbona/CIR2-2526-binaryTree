@@ -9,6 +9,9 @@ public class Main {
         bst.addData(3, "Titi");
         bst.addData(1, "Tata");
         bst.addData(2, "Tete");
+        bst.addData(10, "CraCra");
+        bst.addData(8, "RhoRho");
+        bst.addData(9, "Nini");
 
 
         bst.addData(6, "Tutu");
@@ -16,5 +19,10 @@ public class Main {
         bst.addData(5, "Toto");
         bst.toMMDFile("bst.mmd");
         System.out.println(bst.getHeight());
+
+        bst.rotateRight(4);
+        bst.rotateLeft(3);
+        bst.toMMDFile("bst2.mmd");
+
     }
 }

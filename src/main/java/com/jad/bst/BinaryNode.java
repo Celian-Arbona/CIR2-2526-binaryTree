@@ -103,6 +103,13 @@ public class BinaryNode<E> implements IBinaryNode<E> {
                 && (this.right == null || this.right.isBalanced());
     }
 
+    @Override
+    public IBinaryNode<E> getByIndex(final int index) {
+        if (this.index == index) return this;
+        if (this.index > index) return (this.left == null) ? null : this.left.getByIndex(index);
+        return (this.right == null) ? null : this.right.getByIndex(index);
+    }
+
     public List<E> getDataListByIndex(final int index) {
         if (this.index == index) return new ArrayList<>(this.data);
         return null;

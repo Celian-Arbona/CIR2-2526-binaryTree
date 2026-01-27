@@ -11,7 +11,7 @@ import java.util.List;
 public class BST<E> implements IBinaryNode<E> {
     @Getter(AccessLevel.PROTECTED)
     @Setter(AccessLevel.PROTECTED)
-    private BinaryNode<E> root;
+    private IBinaryNode<E> root;
 
     public BST() {
         this.root = null;
@@ -39,22 +39,22 @@ public class BST<E> implements IBinaryNode<E> {
 
     @Override
     public IBinaryNode<E> getLeft() {
-        return (this.root != null) ? this.root.getLeft() : null;
+        return this.root;
     }
 
     @Override
     public void setLeft(final IBinaryNode<E> left) {
-        if (this.root != null) this.root.setLeft(left);
+        this.root = left;
     }
 
     @Override
     public IBinaryNode<E> getRight() {
-        return (this.root != null) ? this.root.getRight() : null;
+        return this.root;
     }
 
     @Override
     public void setRight(final IBinaryNode<E> right) {
-        if (this.root != null) this.root.setRight(right);
+        this.root = right;
     }
 
     public IBinaryNode<E> getParent(final int index) {
@@ -82,6 +82,11 @@ public class BST<E> implements IBinaryNode<E> {
         return this.root == null || this.root.isBalanced();
     }
 
+    @Override
+    public IBinaryNode<E> getByIndex(final int index) {
+        return (this.root == null) ? null : this.root.getByIndex(index);
+    }
+
     public void toMMDFile(final String fileName) {
         if (this.root == null) return;
         StringBuilder sb = new StringBuilder();
@@ -105,4 +110,27 @@ public class BST<E> implements IBinaryNode<E> {
             throw new RuntimeException(e);
         }
     }
+
+    public void rotateLeft(final int index) {
+        final IBinaryNode<E> parent = this.getParent(index);
+        if (parent == null) return;
+        final IBinaryNode<E> current = this.getByIndex(index);
+        final IBinaryNode<E> right = current.getRight();
+        if (parent.getLeft() == current) parent.setLeft(right);
+        if (parent.getRight() == current) parent.setRight(right);
+        current.setRight((right == null) ? null : right.getLeft());
+        if (right != null) right.setLeft(current);
+    }
+
+    public void rotateRight(final int index) {
+        final IBinaryNode<E> parent = this.getParent(index);
+        if (parent == null) return;
+        final IBinaryNode<E> current = this.getByIndex(index);
+        final IBinaryNode<E> left = current.getLeft();
+        if (parent.getLeft() == current) parent.setLeft(left);
+        if (parent.getRight() == current) parent.setRight(left);
+        current.setLeft((left == null) ? null : left.getRight());
+        if (left != null) left.setRight(current);
+    }
+
 }
