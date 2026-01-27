@@ -6,8 +6,9 @@ import lombok.Setter;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
-public class BST<E> {
+public class BST<E> implements IBinaryNode<E> {
     @Getter(AccessLevel.PROTECTED)
     @Setter(AccessLevel.PROTECTED)
     private BinaryNode<E> root;
@@ -19,6 +20,51 @@ public class BST<E> {
     public void addData(final int index, final E data) {
         if (this.root == null) this.root = new BinaryNode<>(index);
         this.root.addData(index, data);
+    }
+
+    @Override
+    public boolean isIndexExist(final int index) {
+        return this.root != null && this.root.isIndexExist(index);
+    }
+
+    @Override
+    public int getIndex() {
+        return (this.root != null) ? this.root.getIndex() : 0;
+    }
+
+    @Override
+    public List<E> getData() {
+        return (this.root != null) ? this.root.getData() : null;
+    }
+
+    @Override
+    public IBinaryNode<E> getLeft() {
+        return (this.root != null) ? this.root.getLeft() : null;
+    }
+
+    @Override
+    public void setLeft(final IBinaryNode<E> left) {
+        if (this.root != null) this.root.setLeft(left);
+    }
+
+    @Override
+    public IBinaryNode<E> getRight() {
+        return (this.root != null) ? this.root.getRight() : null;
+    }
+
+    @Override
+    public void setRight(final IBinaryNode<E> right) {
+        if (this.root != null) this.root.setRight(right);
+    }
+
+    public IBinaryNode<E> getParent(final int index) {
+        if (this.root != null && this.root.getIndex() == index) return this;
+        return (this.root != null) ? this.root.getParent(index) : null;
+    }
+
+    @Override
+    public String toMMDString() {
+        return this.root.toMMDString();
     }
 
     public void toMMDFile(final String fileName) {

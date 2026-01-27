@@ -7,14 +7,14 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter(AccessLevel.PROTECTED)
-public class BinaryNode<E> {
+@Getter(AccessLevel.PUBLIC)
+public class BinaryNode<E> implements IBinaryNode<E> {
     private final int index;
     private final List<E> data = new ArrayList<>();
-    @Setter(AccessLevel.PROTECTED)
-    private BinaryNode<E> left;
-    @Setter(AccessLevel.PROTECTED)
-    private BinaryNode<E> right;
+    @Setter(AccessLevel.PUBLIC)
+    private IBinaryNode<E> left;
+    @Setter(AccessLevel.PUBLIC)
+    private IBinaryNode<E> right;
 
     public BinaryNode(final int index) {
         this.index = index;
@@ -22,6 +22,7 @@ public class BinaryNode<E> {
         this.right = null;
     }
 
+    @Override
     public void addData(final int index, final E data) {
         if (this.index == index) {
             this.data.add(data);
@@ -34,11 +35,7 @@ public class BinaryNode<E> {
         }
     }
 
-    public List<E> getDataListByIndex(final int index) {
-        if (this.index == index) return new ArrayList<>(this.data);
-        return null;
-    }
-
+    @Override
     public boolean isIndexExist(final int index) {
         if (this.index == index) return true;
         if (index < this.index) {
@@ -49,13 +46,28 @@ public class BinaryNode<E> {
         return (this.right.isIndexExist(index));
     }
 
+    @Override
+    public IBinaryNode<E> getParent(final int index) {
+        if ((this.left != null && this.left.getIndex() == index) || (this.right != null && this.right.getIndex() == index)) {
+            return this;
+        }
+        if (index < this.index) {
+            if (this.left == null) return null;
+            return (this.left.getParent(index));
+        }
+        if (this.right == null) return null;
+        return (this.right.getParent(index));
+    }
+
+    @Override
     public String toMMDString() {
         if (this.left == null && this.right == null) return "";
         StringBuilder sb = new StringBuilder();
         if (this.left != null) {
             String temp = this.left.getData().toString();
             temp = temp.substring(1, temp.length() - 1);
-            sb.append(this.index).append(" --> ").append(this.left.index).append("(").append(this.left.index).append(
+            sb.append(this.index).append(" --> ").append(this.left.getIndex()).append("(").append(
+                    this.left.getIndex()).append(
                     "-").append(
                     temp).append(")").append("\n");
             sb.append(this.left.toMMDString());
@@ -63,11 +75,17 @@ public class BinaryNode<E> {
         if (this.right != null) {
             String temp = this.right.getData().toString();
             temp = temp.substring(1, temp.length() - 1);
-            sb.append(this.index).append(" --> ").append(this.right.index).append("(").append(this.right.index).append(
+            sb.append(this.index).append(" --> ").append(this.right.getIndex()).append("(").append(
+                    this.right.getIndex()).append(
                     "-").append(
                     temp).append(")").append("\n");
             sb.append(this.right.toMMDString());
         }
         return sb.toString();
+    }
+
+    public List<E> getDataListByIndex(final int index) {
+        if (this.index == index) return new ArrayList<>(this.data);
+        return null;
     }
 }
